@@ -38,7 +38,6 @@ export async function GET(request: NextRequest) {
             },
         });
         const { sub, name, given_name, family_name, email } = userInfoResponse.data;
-        const data = { accessToken, refreshToken }
         
         const existingUser = await db.select().from(users).where(eq(users.sub, sub)).limit(1);
         if (existingUser.length > 0) {
@@ -68,6 +67,6 @@ export async function GET(request: NextRequest) {
         });
         return response;
     } catch (err) {
-        return NextResponse.json({ message: "failed", status: 400 })
+        return NextResponse.json({ message: err, status: 400 })
     }
 }

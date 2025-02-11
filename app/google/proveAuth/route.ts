@@ -6,7 +6,7 @@ import { eq } from "drizzle-orm";
 
 import axios from "axios"
 
-export async function POST(request: NextRequest, res: NextResponse) {
+export async function POST(request: NextRequest) {
     try {
         const authToken = request.cookies.get('auth_token');
 
@@ -41,6 +41,7 @@ export async function POST(request: NextRequest, res: NextResponse) {
                 console.log(`Token läuft ab in: ${minutes} Minuten und ${seconds} Sekunden`);
                 return NextResponse.json({ message: name }, { status: 200 });
             } catch (err) {
+                console.log(err)
                 console.log("3 catch")
                 const result = await db.select().from(users).where(eq(users.access_token, stringToken));
                 const refreshToken = result[0].refresh_token
@@ -75,11 +76,11 @@ export async function POST(request: NextRequest, res: NextResponse) {
                         });
                         return response
                     } catch (err) {
-                        //console.error(err)
+                        console.error(err)
                     }
             }
         }
     } catch (err) {
-        return NextResponse.json({ message: "auth failed", status: 400 })
+        return NextResponse.json({ message: err, status: 400 })
     }
 }

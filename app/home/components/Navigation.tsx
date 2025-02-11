@@ -1,7 +1,5 @@
 "use client"
 
-import { useEffect } from "react"
-
 interface NavigationProps {
   username: string
 }

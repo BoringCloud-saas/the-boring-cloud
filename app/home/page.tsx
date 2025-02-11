@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useState, useEffect } from "react"
 import useAuth from "../hooks/proveAuth"
 import Navigation from "./components/Navigation"
 
