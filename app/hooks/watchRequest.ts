@@ -6,7 +6,7 @@ import { useState } from "react"
 const useGmail = () => {
     const watchRequest = async () => {
         try {
-            const response = await axios.post("https://263c-2001-871-25f-1b02-115-8b33-1eb1-e220.ngrok-free.app/webhook/gmail")
+            const response = await axios.post("https://8dc75108cb56.ngrok.app/webhook/gmail")
             console.log(response.data)
         } catch (err) {
             console.error("auth hook catch err: ", err)

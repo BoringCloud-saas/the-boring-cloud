@@ -25,7 +25,9 @@ export default function Page() {
 
     eventSource.onmessage = (event) => {
       const data = JSON.parse(event.data);  // Parsen der JSON-Daten
-      console.log(data.historyID);          // Gibt nur den Wert von historyID aus
+      const ID = data.historyID  // Gibt nur den Wert von historyID aus
+
+      // send ID to custom hook
     };
 
     eventSource.onerror = () => {

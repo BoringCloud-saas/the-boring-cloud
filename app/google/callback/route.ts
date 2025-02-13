@@ -58,7 +58,7 @@ export async function GET(request: NextRequest) {
             });
         }
 
-        const response = NextResponse.redirect("https://263c-2001-871-25f-1b02-115-8b33-1eb1-e220.ngrok-free.app/home");
+        const response = NextResponse.redirect("https://8dc75108cb56.ngrok.app/home");
 
         response.cookies.set("auth_token", accessToken, {
             httpOnly: true,
