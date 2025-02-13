@@ -58,7 +58,7 @@ export async function GET(request: NextRequest) {
             });
         }
 
-        const response = NextResponse.redirect("http://localhost:3000/home");
+        const response = NextResponse.redirect("https://ec26-2001-871-25f-1b02-115-8b33-1eb1-e220.ngrok-free.app/home");
 
         response.cookies.set("auth_token", accessToken, {
             httpOnly: true,

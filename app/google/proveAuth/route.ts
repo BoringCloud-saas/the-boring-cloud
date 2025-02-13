@@ -74,6 +74,8 @@ export async function POST(request: NextRequest) {
                                 secure: true,
                                 path: "/",
                         });
+                        const cookieHeader = request.headers.get('cookie');
+                        console.log('Cookie Header:', cookieHeader);  // Überprüfe, ob der Header existiert
                         return response
                     } catch (err) {
                         console.error(err)

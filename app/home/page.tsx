@@ -1,18 +1,29 @@
 "use client"
 
 import { useState, useEffect } from "react"
+
 import useAuth from "../hooks/proveAuth"
+import useGmail from "../hooks/watchRequest"
+
 import Navigation from "./components/Navigation"
 
 export default function Page() {
   const [username, setUsername] = useState("")
-  
+
   const { proveAuth } = useAuth()
+  const { watchRequest } = useGmail()
 
   useEffect(() => {
     const fetchAuth = async () => {
       const response = await proveAuth()
       setUsername(response)
+    }
+    fetchAuth()
+  }, [])
+
+  useEffect(() => {
+    const fetchAuth = async () => {
+      const response = await watchRequest()
     }
     fetchAuth()
   }, [])
@@ -25,7 +36,7 @@ export default function Page() {
               <span className="text-3xl font-semibold">Email Analytics</span>
           </div>
           <div className="flex w-4/6 mt-6 bg-[#ffffff] rounded-xl p-8 border border-[#e6e6e6]">
-              asd
+            
           </div>
       </div>
     </div>
