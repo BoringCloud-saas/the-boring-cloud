@@ -26,3 +26,34 @@ export async function POST(request: NextRequest) {
     return setCorsHeaders(NextResponse.json({ message: "Failed", status: "400" }));
   }
 }
+
+export async function GET(req: NextRequest) {
+  const stream = new ReadableStream({
+    start(controller) {
+      // Initiale Nachricht, um die Verbindung zu bestätigen
+      controller.enqueue('data: "200 OK"\n\n');
+
+      // Halte die Verbindung offen
+      const interval = setInterval(() => {
+        if (historyID !== null) {
+          controller.enqueue(`data: ${JSON.stringify({ historyID })}\n\n`);
+        }
+      }, 2000);
+
+      // Beende das Intervall, wenn die Verbindung abgebrochen wird
+      req.signal.addEventListener('abort', () => {
+        clearInterval(interval);
+        controller.close(); // Schließe den Stream
+      });
+    },
+  });
+
+  return new NextResponse(stream, {
+    headers: {
+      'Content-Type': 'text/event-stream',
+      'Cache-Control': 'no-cache',
+      'Connection': 'keep-alive',
+      'Access-Control-Allow-Origin': '*',
+    },
+  });
+}

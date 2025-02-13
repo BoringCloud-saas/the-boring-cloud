@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
 
             const historyID = decoded.historyId
 
-            const eventSourceUrl = "https://ec26-2001-871-25f-1b02-115-8b33-1eb1-e220.ngrok-free.app/api"; // Der SSE-Endpoint
+            const eventSourceUrl = "https://263c-2001-871-25f-1b02-115-8b33-1eb1-e220.ngrok-free.app/api"; // Der SSE-Endpoint
             await fetch(eventSourceUrl, {
               method: "POST",
               body: JSON.stringify({ historyID }),
