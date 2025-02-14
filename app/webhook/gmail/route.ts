@@ -16,7 +16,7 @@ export async function POST(request: NextRequest) {
             const response = await axios.post(
               "https://gmail.googleapis.com/gmail/v1/users/me/watch",
               {
-                labelIds: ["INBOX", "UNREAD"],  // Überwache nur das INBOX-Label
+                labelIds: ["INBOX"],  // Überwache nur das INBOX-Label
                 topicName: "projects/the-boring-cloud-450516/topics/SaaSTopic",  // Das Topic, das du verwenden möchtest
               },
               {

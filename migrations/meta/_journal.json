@@ -8,6 +8,13 @@
       "when": 1739211728339,
       "tag": "0000_soft_jubilee",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1739538439954,
+      "tag": "0001_perfect_nehzno",
+      "breakpoints": true
     }
   ]
 }

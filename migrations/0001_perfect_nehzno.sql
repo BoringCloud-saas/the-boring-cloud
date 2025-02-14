@@ -1,0 +1,1 @@
+ALTER TABLE "users" ADD COLUMN "historyID" varchar(255) NOT NULL;

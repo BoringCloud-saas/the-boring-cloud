@@ -47,7 +47,7 @@ export async function GET(request: NextRequest) {
                 .set({access_token: accessToken})
                 .where(eq(users.access_token, userAccessToken));
         } else {
-            await db.insert(users).values({
+            const x = await db.insert(users).values({
                 access_token: accessToken,
                 refresh_token: refreshToken,
                 sub,
@@ -55,10 +55,12 @@ export async function GET(request: NextRequest) {
                 given_name,
                 family_name,
                 email,
+                historyID: 'default',
             });
+            console.log(x)
         }
 
-        const response = NextResponse.redirect("https://8dc75108cb56.ngrok.app/home");
+        const response = NextResponse.redirect("https://0ec3c8da7ca8.ngrok.app/home");
 
         response.cookies.set("auth_token", accessToken, {
             httpOnly: true,
@@ -67,6 +69,7 @@ export async function GET(request: NextRequest) {
         });
         return response;
     } catch (err) {
+        console.error(err)
         return NextResponse.json({ message: err, status: 400 })
     }
 }

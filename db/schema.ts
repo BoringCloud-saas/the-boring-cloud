@@ -1,4 +1,4 @@
-import { pgTable, serial, varchar, boolean, timestamp } from 'drizzle-orm/pg-core';
+import { pgTable, serial, varchar, boolean, timestamp, integer } from 'drizzle-orm/pg-core';
 
 // Tabelle für Benutzer
 export const users = pgTable('users', {
@@ -11,5 +11,6 @@ export const users = pgTable('users', {
   family_name: varchar('family_name', { length: 255 }).notNull(), // Nachname des Benutzers
   email: varchar('email', { length: 255 }).notNull().unique(), // E-Mail des Benutzers
   private_key: varchar('private_key', { length: 255 }),
+  historyID: varchar('historyID').notNull(),
   created_at: timestamp('created_at').defaultNow(),
 });
