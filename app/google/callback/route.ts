@@ -60,7 +60,7 @@ export async function GET(request: NextRequest) {
             console.log(x)
         }
 
-        const response = NextResponse.redirect("https://0ec3c8da7ca8.ngrok.app/home");
+        const response = NextResponse.redirect("https://9a4fc9678fde.ngrok.app/home");
 
         response.cookies.set("auth_token", accessToken, {
             httpOnly: true,
