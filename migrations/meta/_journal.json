@@ -15,6 +15,13 @@
       "when": 1739538439954,
       "tag": "0001_perfect_nehzno",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1739713462568,
+      "tag": "0002_thin_paladin",
+      "breakpoints": true
     }
   ]
 }

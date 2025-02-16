@@ -6,6 +6,7 @@ import useAuth from "../hooks/proveAuth"
 import useEmail from "../hooks/proveEmail"
 
 import useGmail from "../hooks/watchRequest"
+import useLogs from "../hooks/getLogs"
 
 import Navigation from "./components/Navigation"
 
@@ -27,6 +28,7 @@ export default function Page() {
   const { proveAuth } = useAuth()
   const { proveEmail } = useEmail()
   const { watchRequest } = useGmail()
+  const { proveLogs } = useLogs() 
 
   const [connectionStatus, setConnectionStatus] = useState<string>("Warte auf Verbindung...");
 
@@ -53,6 +55,7 @@ export default function Page() {
           // send ID to custom hook
           const fetch = async () => {
             const response = await proveEmail(ID);
+            console.log("-------------------------------->")
             if (response?.data.status == 200) {
               if (response.data.message === "initialization") {
                 
@@ -101,6 +104,13 @@ export default function Page() {
   useEffect(() => {
     const fetchAuth = async () => {
       const response = await watchRequest()
+    }
+    fetchAuth()
+  }, [])
+
+  useEffect(() => {
+    const fetchAuth = async () => {
+      const response = await proveLogs()
     }
     fetchAuth()
   }, [])

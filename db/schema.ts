@@ -1,4 +1,4 @@
-import { pgTable, serial, varchar, boolean, timestamp, integer } from 'drizzle-orm/pg-core';
+import { pgTable, serial, varchar, text, timestamp, foreignKey } from 'drizzle-orm/pg-core';
 
 // Tabelle für Benutzer
 export const users = pgTable('users', {
@@ -13,4 +13,11 @@ export const users = pgTable('users', {
   private_key: varchar('private_key', { length: 255 }),
   historyID: varchar('historyID').notNull(),
   created_at: timestamp('created_at').defaultNow(),
+});
+
+export const change_logs = pgTable('change_logs', {
+  id: serial('id').primaryKey(),
+  access_token: varchar('access_token', { length: 255 }).notNull().references(() => users.access_token, { onUpdate: 'cascade' }),
+  changeLog: text('changeLog').notNull(),
+  datum: timestamp('datum').defaultNow(),
 });

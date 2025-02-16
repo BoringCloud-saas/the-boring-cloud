@@ -1,7 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 
 import { db } from "@/db/db"
-import { users } from "@/db/schema"
+import { users, change_logs } from "@/db/schema"
 import { eq } from "drizzle-orm";
 
 const axios = require('axios');
@@ -30,8 +30,18 @@ export async function POST(request: NextRequest) {
                     // DBH Database history ID 
                     const DBH = user[0].historyID
                     if (DBH === "default") {
-                        // Sending Email
+                        console.log("default")
+                        const now = new Date();
+                        
+                        const changeLogWFI = "Wating for Initialization"
+                        await db.insert(change_logs).values({
+                            access_token: stringToken,  // Dein gespeichertes Access Token
+                            changeLog: changeLogWFI,
+                            datum: now,  // Formatierte Datum
+                        });
 
+                        // Sending Email
+                        // Change log -> Wating for Initialization
                         const response = await axios.get(
                             `https://gmail.googleapis.com/gmail/v1/users/${sub}/history?startHistoryId=${historyID}&historyTypes=messageAdded`,
                             {
@@ -46,8 +56,18 @@ export async function POST(request: NextRequest) {
                             .set({historyID: historyID})
                             .where(eq(users.sub, sub))
 
+                        const changeLogIC = "Initialization complete - Your emails are now being monitored"
+                        // Change log -> Initialization complete
+                        const x = await db.insert(change_logs).values({
+                            access_token: stringToken,  // Dein gespeichertes Access Token
+                            changeLog: changeLogIC,
+                            datum: now,  // Formatierte Datum
+                        });
+                        console.log(x)
+
                         return NextResponse.json({ message: "initialization", status: 200 })
                     } else {
+                        console.log("history id")
                         const response = await axios.get(
                             `https://gmail.googleapis.com/gmail/v1/users/${sub}/history?startHistoryId=${DBH}&historyTypes=messageAdded`,
                             {
@@ -113,7 +133,9 @@ export async function POST(request: NextRequest) {
                                 console.log("Betreff:", subject);
                                 console.log("Inhalt:", content);
 
-                                return NextResponse.json({ message: "SaaS fully ready", status: 200 })
+
+
+                                return NextResponse.json({ message: "Email Send ! ", status: 200 })
                             } catch (err) {
                                 console.error("Fehler bei der Anfrage:", err);
                             }
