@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
                 const result = await db.select().from(users).where(eq(users.access_token, stringToken));
                 const refreshToken = result[0].refresh_token
                 console.log("4 catch")
-                const tokenUrl = 'https://oauth2.googleapis.com/token';
+                    const tokenUrl = 'https://oauth2.googleapis.com/token';
                     const tokenResponse = await fetch(tokenUrl, {
                         method: "POST",
                         headers: { "Content-Type": "application/x-www-form-urlencoded" },
