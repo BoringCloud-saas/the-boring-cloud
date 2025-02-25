@@ -31,28 +31,28 @@ export async function GET(req: NextRequest) {
   let lastSentID: string | null = null; // Speichert die zuletzt gesendete ID
   const stream = new ReadableStream({
     start(controller) {
-      // Initiale Nachricht, um die Verbindung zu bestätigen
-      controller.enqueue('data: "200 OK"\n\n');
+        // Initiale Nachricht, um die Verbindung zu bestätigen
+        controller.enqueue('data: "200 OK"\n\n');
 
-      const heartbeatInterval = setInterval(() => {
-        controller.enqueue('data: "heartbeat"\n\n');
-      }, 30000);
+        const heartbeatInterval = setInterval(() => {
+          controller.enqueue('data: "heartbeat"\n\n');
+        }, 30000);
 
-      // Halte die Verbindung offen
-      const interval = setInterval(() => {
-        if (historyID !== null && historyID !== lastSentID) {
-          controller.enqueue(`data: ${JSON.stringify({ historyID })}\n\n`);
-          lastSentID = historyID; // Aktualisiere die zuletzt gesendete ID
-          historyID = null;
-        }
-      }, 2000);
+        // Halte die Verbindung offen
+        const interval = setInterval(() => {
+          if (historyID !== null && historyID !== lastSentID) {
+            controller.enqueue(`data: ${JSON.stringify({ historyID })}\n\n`);
+            lastSentID = historyID; // Aktualisiere die zuletzt gesendete ID
+            historyID = null;
+          }
+        }, 2000);
 
-      // Beende das Intervall, wenn die Verbindung abgebrochen wird
-      req.signal.addEventListener('abort', () => {
-        clearInterval(interval);
-        clearInterval(heartbeatInterval); // Stoppe den Heartbeat
-        controller.close(); // Schließe den Stream
-      });
+        // Beende das Intervall, wenn die Verbindung abgebrochen wird
+        req.signal.addEventListener('abort', () => {
+          clearInterval(interval);
+          clearInterval(heartbeatInterval); // Stoppe den Heartbeat
+          controller.close(); // Schließe den Stream
+        });
     },
   });
 
